@@ -39,8 +39,8 @@ class ContextExec < Chef::Knife
          long: '--regex VALUE',
          description: 'A regex used to filter output.'
   option :parallel,
-         short: '-P VALUE',
-         long: '--parallel VALUE',
+         short: '-P',
+         long: '--parallel',
          description: 'Run in parallel?',
          boolean: true
 
