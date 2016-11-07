@@ -61,7 +61,6 @@ module KnifeNodeContextExec
         script_filename.empty? || command.empty? || filter_regex.empty?
       directory = File.expand_path(directory)
       template_filename = File.expand_path(template_filename)
-      script_filename = File.expand_path(script_filename)
       puts "Environment: #{environment}"
       puts "Query:       #{node_query}"
       puts "Directory:   #{directory}"
