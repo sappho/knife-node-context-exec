@@ -1,4 +1,5 @@
 require 'knife-node-context-exec/version'
+require 'chef/knife'
 
 # The knife
 class ContextExec < Chef::Knife
@@ -10,37 +11,38 @@ class ContextExec < Chef::Knife
   end
 
   option :environment,
-         short: '-E',
-         long: '--environment',
+         short: '-E VALUE',
+         long: '--environment VALUE',
          description: 'The environment to search.'
   option :node_query,
-         short: '-Q',
-         long: '--query',
+         short: '-Q VALUE',
+         long: '--query VALUE',
          description: 'The node query.'
   option :directory,
-         short: '-D',
-         long: '--directory',
+         short: '-D VALUE',
+         long: '--directory VALUE',
          description: 'A directory for working files.'
   option :template_filename,
-         short: '-T',
-         long: '--template',
+         short: '-T VALUE',
+         long: '--template VALUE',
          description: 'The filename of a template.'
   option :script_filename,
-         short: '-S',
-         long: '--script',
+         short: '-S VALUE',
+         long: '--script VALUE',
          description: 'The environment to search.'
   option :command,
-         short: '-C',
-         long: '--command',
+         short: '-C VALUE',
+         long: '--command VALUE',
          description: 'The command to run.'
   option :filter_regex,
-         short: '-R',
-         long: '--regex',
+         short: '-R VALUE',
+         long: '--regex VALUE',
          description: 'A regex used to filter output.'
   option :parallel,
-         short: '-P',
-         long: '--parallel',
-         description: 'Run in parallel?'
+         short: '-P VALUE',
+         long: '--parallel VALUE',
+         description: 'Run in parallel?',
+         boolean: true
 
   def run
     puts "knife context exec #{KnifeNodeContextExec::VERSION}"
@@ -51,7 +53,7 @@ class ContextExec < Chef::Knife
     script_filename = config[:script_filename].to_s
     command = config[:command].to_s
     filter_regex = config[:filter_regex].to_s
-    parallel = config[:parallel].to_s
+    parallel = config[:parallel]
     puts "Environment: #{environment}"
     puts "Query:       #{node_query}"
     puts "Directory:   #{directory}"
@@ -65,6 +67,6 @@ class ContextExec < Chef::Knife
     end
     nodes.each { |node| puts "Found #{node.name}" }
     KnifeNodeContextExec.run(nodes, directory, template_filename, script_filename, command, filter_regex,
-                             parallel == 'true', false)
+                             parallel, false)
   end
 end
