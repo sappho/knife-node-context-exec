@@ -42,7 +42,8 @@ class ContextExec < Chef::Knife
          short: '-P',
          long: '--parallel',
          description: 'Run in parallel?',
-         boolean: true
+         boolean: true | false,
+         default: true
 
   def run
     puts "knife context exec #{KnifeNodeContextExec::VERSION}"
