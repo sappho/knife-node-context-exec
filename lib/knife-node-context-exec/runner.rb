@@ -16,6 +16,7 @@ module KnifeNodeContextExec
     end
 
     def run
+      yield(">>>> Executing script for #{node[:name]}")
       @thread = Thread.new do
         script_directory = "#{working_directory}/#{node[:name]}"
         FileUtils.makedirs(script_directory)

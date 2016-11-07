@@ -1,7 +1,8 @@
 $LOAD_PATH << File.expand_path('../lib', __FILE__)
+require 'knife-node-context-exec/version'
 Gem::Specification.new do |specification|
   specification.name = 'knife-node-context-exec'
-  specification.version = '1.0.0'
+  specification.version = KnifeNodeContextExec::VERSION
   specification.authors = ['Andrew Heald']
   specification.email = 'andrew@heald.uk'
   specification.homepage = 'https://github.com/sappho/knife-node-context-exec'
