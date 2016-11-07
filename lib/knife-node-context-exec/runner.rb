@@ -16,9 +16,9 @@ module KnifeNodeContextExec
     end
 
     def run
-      yield(">>>> Executing script for #{node[:name]}")
+      yield(">>>> Executing script for #{node.name}")
       @thread = Thread.new do
-        script_directory = "#{working_directory}/#{node[:name]}"
+        script_directory = "#{working_directory}/#{node.name}"
         FileUtils.makedirs(script_directory)
         template = File.read(template_filename)
         script = ERB.new(template).result(binding)
@@ -58,7 +58,7 @@ module KnifeNodeContextExec
     nodes.each(&:wait)
     nodes.each do |node|
       puts
-      puts "===== FULL OUTPUT - #{node.node[:name]} ======================"
+      puts "===== FULL OUTPUT - #{node.node.name} ======================"
       node.output.each { |line| puts line }
     end
     FileUtils.remove_dir(working_directory) if clean
