@@ -69,10 +69,8 @@ module KnifeNodeContextExec
       puts "Command:     #{command}"
       puts "Regex:       #{filter_regex}"
       puts "Parallel?    #{parallel}"
-      nodes = Chef::Search::Query.new.search(:node, node_query).first.select do |node|
-        node.environment == environment
-      end
-      nodes.each { |node| puts "Found #{node.name}" }
+      nodes = Chef::Search::Query.new.search(:node, node_query).first.select { |node| node.environment == environment }
+      nodes.each { |node| puts "Found node: #{node.name}" }
       KnifeNodeContextExec.run(nodes, directory, template_filename, script_filename, command, filter_regex,
                                parallel, false)
     end
