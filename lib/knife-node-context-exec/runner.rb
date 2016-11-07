@@ -17,7 +17,7 @@ module KnifeNodeContextExec
 
     def run
       @thread = Thread.new do
-        yield(">>>> Executing script for #{node.name} <<<<")
+        yield(">>>> Executing process for #{node.name} <<<<")
         script_directory = "#{working_directory}/#{node.name}"
         FileUtils.makedirs(script_directory)
         template = File.read(template_filename)
@@ -33,9 +33,9 @@ module KnifeNodeContextExec
             @output << line
             yield(line)
           end
+          yield(">>>> Completed process for #{node.name} <<<<")
         end
       end
-      yield(">>>> Executing script for #{node.name} <<<<")
       self
     end
 
