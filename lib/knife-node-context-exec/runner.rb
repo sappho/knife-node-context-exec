@@ -24,6 +24,7 @@ module KnifeNodeContextExec
         full_script_filename =
           File.join(script_directory, script_filename).gsub(File::SEPARATOR, File::ALT_SEPARATOR || File::SEPARATOR)
         File.open(full_script_filename, 'w') { |file| file.puts(script) }
+        yield(">>>> Script filename: #{full_script_filename} <<<<")
         cooked_command = command.gsub('%script%', full_script_filename)
         @output = []
         yield(">>>> Command: #{cooked_command} <<<<")
