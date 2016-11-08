@@ -21,10 +21,10 @@ module KnifeNodeContextExec
         FileUtils.makedirs(script_directory)
         template = File.read(template_filename)
         script = ERB.new(template).result(binding)
-        full_script_filename =
-          File.join(script_directory, script_filename).gsub(File::SEPARATOR, File::ALT_SEPARATOR || File::SEPARATOR)
+        full_script_filename = File.join(script_directory, script_filename)
         File.open(full_script_filename, 'w') { |file| file.puts(script) }
-        cooked_command = command.gsub('%script%', full_script_filename.gsub('\\', '\\\\'))
+        cooked_command =
+          command.gsub('%script%', full_script_filename).gsub(File::SEPARATOR, File::ALT_SEPARATOR || File::SEPARATOR)
         @output = []
         yield(">>>> Command: #{cooked_command} <<<<")
         Open3.pipeline_r(cooked_command) do |output, _|
