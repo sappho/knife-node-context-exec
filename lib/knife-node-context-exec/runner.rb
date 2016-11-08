@@ -23,8 +23,9 @@ module KnifeNodeContextExec
         script = ERB.new(template).result(binding)
         full_script_filename = File.join(script_directory, script_filename)
         File.open(full_script_filename, 'w') { |file| file.puts(script) }
-        cooked_command =
-          command.gsub('%script%', full_script_filename).gsub(File::SEPARATOR, File::ALT_SEPARATOR || File::SEPARATOR)
+        cooked_command = command.gsub('%script%') do
+          full_script_filename.gsub(File::SEPARATOR) { File::ALT_SEPARATOR || File::SEPARATOR }
+        end
         @output = []
         yield(">>>> Command: #{cooked_command} <<<<")
         Open3.pipeline_r(cooked_command) do |output, _|
