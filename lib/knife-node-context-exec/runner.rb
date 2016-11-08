@@ -17,7 +17,6 @@ module KnifeNodeContextExec
 
     def run
       @thread = Thread.new do
-        yield(">>>> Executing process for #{node.name} <<<<")
         script_directory = "#{working_directory}/#{node.name}"
         FileUtils.makedirs(script_directory)
         template = File.read(template_filename)
@@ -27,7 +26,9 @@ module KnifeNodeContextExec
         File.open(full_script_filename, 'w') { |file| file.puts(script) }
         cooked_command = command.gsub('%script%', full_script_filename)
         @output = []
+        yield(">>>> Command: #{cooked_command} <<<<")
         Open3.pipeline_r(cooked_command) do |output, _|
+          yield(">>>> Executing process for #{node.name} <<<<")
           output.each_line do |line|
             line.rstrip!
             @output << line
